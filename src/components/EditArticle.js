@@ -17,6 +17,7 @@ class EditArticle extends React.Component {
     };
     this.saveArticle = props.saveArticle;
     this.handleSave = this.handleSave.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
   handleSave = function(e) {
@@ -50,6 +51,12 @@ class EditArticle extends React.Component {
       }
     });
   }
+  handleCancel =  function(e) {
+    var title = this.article.title,
+        author = this.article.author,
+        body = this.article.body;
+    this.props.saveArticle(this.index, title, author, body);
+  }
   handleChange = function(e) {
     var obj = {};
     obj[e.target.name] = e.target.value;
@@ -72,6 +79,7 @@ class EditArticle extends React.Component {
      value={this.state.body} onChange={this.handleChange}/>
     <h3>
       <button onClick={this.handleSave}> Save </button>
+      <button onClick={this.handleCancel}> Cancel </button>
     </h3>
     </li>
     );
