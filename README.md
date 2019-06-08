@@ -1,13 +1,13 @@
 This project was
 * bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-* a react App for Blog system front-end side, sending requests to call the APIs of `Cytac` project.
+* a react App for Blog system front-end side, sending requests to call the APIs of `RESTful-API-server` project.
 
 # Install dependencies
 
 `yarn`
 
 ## Set up the API server
-Clone the `Cytac` project from https://gitlab.punwave.com/veritymissed/Cytac and build the server on [http://localhost:5000](http://localhost:5000)
+Clone the `RESTful-API-server` project from https://github.com/veritymissed/RESTful-API-server and build the server on [http://localhost:5000](http://localhost:5000)
 
 ## Available Scripts
 In the project directory, you can run:
