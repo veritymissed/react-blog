@@ -1,9 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import { saveArticle } from "../actions";
-
-import superagent from 'superagent';
+import { updateArticle, editArticleCancel } from "../actions";
 
 class EditArticle extends React.Component {
   constructor(props) {
@@ -33,29 +31,12 @@ class EditArticle extends React.Component {
     if(!body.length){
       alert("input body");
     }
-    superagent
-    .put('http://localhost:5000/api/article/' + this.article._id)
-    .send({
-      title: title,
-      author: author,
-      body: body
-    })
-    .set('Accept', 'json')
-    .end((err, res) => {
-      if(err){
-        console.log(err);
-        alert(err.message);
-      }
-      else{
-        this.props.saveArticle(this.index, title, author, body);
-      }
-    });
+    const {updateArticle} = this.props
+    updateArticle(this.article._id, title, author, body);
   }
   handleCancel =  function(e) {
-    var title = this.article.title,
-        author = this.article.author,
-        body = this.article.body;
-    this.props.saveArticle(this.index, title, author, body);
+    const {editArticleCancel} = this.props
+    editArticleCancel(this.article._id)
   }
   handleChange = function(e) {
     var obj = {};
@@ -85,4 +66,4 @@ class EditArticle extends React.Component {
     );
   }
 }
-export default connect(null, {saveArticle})(EditArticle);
+export default connect(null, {updateArticle, editArticleCancel})(EditArticle);

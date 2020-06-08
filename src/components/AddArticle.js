@@ -2,8 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 import { addArticle } from "../actions";
 
-import superagent from 'superagent';
-
 class AddArticle extends React.Component {
   constructor(props){
     super(props);
@@ -34,25 +32,13 @@ class AddArticle extends React.Component {
     if(!body.length){
       alert("input body");
     }
-    superagent
-    .post('http://localhost:5000/api/article')
-    .send({
-      title: title,
-      author: author,
+    let newArticle = {
+      title: this.state.title,
+      author: this.state.author,
       body: this.state.body
-    })
-    .set('Accept', 'json')
-    .end((err, res) => {
-      if(err){
-        console.log(err);
-        alert(err.message);
-      }
-      else{
-        var newArticle = res.body;
-        this.props.addArticle(newArticle._id, newArticle.date, title, author, body);
-        this.setState({ title: "", author: "", body: ""});
-      }
-    });
+    }
+    const {addArticle} = this.props
+    addArticle(newArticle)
   }
 
   render(){

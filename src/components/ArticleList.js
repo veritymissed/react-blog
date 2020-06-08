@@ -1,26 +1,12 @@
 import React from 'react'
 import { connect } from "react-redux";
-import superagent from 'superagent'
-
 import EditArticle from "./EditArticle";
 import {getArticleList} from "../reducers"
-import {addArticle, editArticle, removeArticle } from "../actions";
+import {editArticle, removeArticle } from "../actions";
 
 class ArticleList extends React.Component {
   componentDidMount(){
-    superagent.get('http://localhost:5000/api/articles')
-    .end((err, res) => {
-      if(err){
-        console.log(err);
-        alert(err.message);
-      }
-      else{
-        var articleArray = res.body;
-        articleArray.forEach((val, idx, arr) => {
-          this.props.addArticle(val._id, val.date, val.title, val.author, val.body);
-        });
-      }
-    });
+
   }
   render(){
     if(this.props.articles && this.props.articles.length){
@@ -52,17 +38,7 @@ class ArticleList extends React.Component {
 
 const Article = connect(null, {editArticle, removeArticle})(({article, index , editArticle, removeArticle}) => {
   function handleDelete(e) {
-    superagent
-    .delete('http://localhost:5000/api/article/' + article._id)
-    .end((err, res) => {
-      if(err){
-        console.log("err", err);
-        alert(err);
-      }
-      else{
-        removeArticle(index);
-      }
-    });
+    removeArticle(article);
   }
 
   function handleEdit(e) {
@@ -85,4 +61,5 @@ const mapStateToProps = (state) =>{
   const articles = getArticleList(state);
   return {articles};
 }
-export default connect(mapStateToProps, {addArticle})(ArticleList)
+
+export default connect(mapStateToProps, {})(ArticleList)
