@@ -5,10 +5,21 @@ import {Provider} from 'react-redux'
 import ArticleApp from './ArticleApp'
 import * as serviceWorker from './serviceWorker';
 
-import {createStore} from 'redux'
+import {createStore, applyMiddleware} from 'redux'
 import rootReducer from './reducers'
 
-const store = createStore(rootReducer);
+import {fetchArticles} from './actions'
+
+import thunk from 'redux-thunk';
+import { createLogger } from 'redux-logger'
+const loggerMiddleware = createLogger()
+
+
+const store = createStore(rootReducer, applyMiddleware(thunk, loggerMiddleware));
+store.dispatch(fetchArticles())
+.then(()=>{
+  console.log(store.getState());
+})
 
 ReactDOM.render((
   <Provider store={store}>
